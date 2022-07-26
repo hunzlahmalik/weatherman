@@ -1,4 +1,3 @@
-from re import M
 from weatherman.constants import MONTHS
 from weatherman.weatherman import WeatherMan
 from weatherman.utils import draw_bar
