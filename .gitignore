@@ -1,6 +1,9 @@
 # VSCODE
 .vscode
+.DS_Store
 ./tests/weatherfiles/
+docs/weatherman.pdf
+docs/weatherman.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
