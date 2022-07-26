@@ -1,0 +1,2 @@
+# weatherman
+Weatherman cli
