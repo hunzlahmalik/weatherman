@@ -1,5 +1,6 @@
 # VSCODE
 .vscode
+./tests/weatherfiles/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
