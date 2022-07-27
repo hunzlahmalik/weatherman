@@ -11,31 +11,54 @@ class WeatherMan:
         self._dirpath = dirpath
 
     def read_file(self, year: int, month: int) -> dict[str, Weather]:
+        """ Reads a weather file and returns a dict of @Weather objects.
+
+        Args:
+            year (int): year of the weather
+            month (int): month of the weather
+
+        Returns:
+            dict[str, Weather]: key is date in YYYY-MM-DD, value is Weather for day
         """
-        Reads a weather file and returns a dict of @Weather objects.
-        @param year: year of the weather
-        @param month: month of the weather
-        @example:
-        >>> weatherman.read_file(2018, 1)
-        >>> weatherman.read_file(2018)
-        """
+
         return reader(
             (self._dirpath + "/" + LOCATION + "_weather_{}_{}.txt").format(
-                year, MONTHS[month]
+                year, MONTHS[month-1]
             )
         )
 
     def get_extremes(
         self, year: int, month: int = None, force_reload=False
-    ) -> dict[str, dict[str, float]]:
-        """
-        Get the extremes of the weather for a given year.
-        @param year: year of the weather
-        @param month: month of the weather
-        @param force_reload: force reload of the cache
-        @example:
-        >>> weatherman.get_extremes(2018, 1)
-        >>> weatherman.get_extremes(2018)
+    ) -> dict[str, dict[str, dict[str, str | float]]]:
+        """ Get the extremes of the weather for a given year.
+
+        Args:
+            year (int): year of the weather
+            month (int, optional): month of the weather. Defaults to None.
+            force_reload (bool, optional): force reload of the cache. Defaults to False.
+
+        Returns:
+            dict[str, dict[str, dict[str, str | float]]]: Computed values
+
+            e.g
+            {
+                "temperature": {
+                    "heighest": {"date": "", "value": None},
+                    "lowest": {"date": "", "value": None},
+                },
+                "humidity": {
+                    "heighest": {"date": "", "value": None},
+                    "lowest": {"date": "", "value": None},
+                },
+                "temperature_mean": {
+                    "heighest": {"date": "", "value": None},
+                    "lowest": {"date": "", "value": None},
+                },
+                "humidity_mean": {
+                    "heighest": {"date": "", "value": None},
+                    "lowest": {"date": "", "value": None},
+                },
+            }
         """
 
         ret = {
@@ -153,16 +176,32 @@ class WeatherMan:
 
     def get_extremes_mean(
         self, year: int, month: int = None, force_reload=False
-    ) -> dict[str, dict[str, float]]:
+    ) -> dict[str, dict[str, dict[str, float]]]:
         """Get the mean of the weather for a given year.
 
         Args:
-            year (int): year of the weather
-            month (int, optional): month of the weather. Defaults to None.
-            force_reload (bool, optional): force reload of the cache. Defaults to False.
+            year(int): year of the weather
+            month(int, optional): month of the weather. Defaults to None.
+            force_reload(bool, optional): force reload of the cache. Defaults to False.
 
         Returns:
-            dict[str, dict[str, float]]: _description_
+            dict[str, dict[str, dict[str, float]]]: Computed Values
+
+            e.g
+            {
+                "temperature": {
+                    "heighest": {"value": 0, "count": 0},
+                    "lowest": {"value": 0, "count": 0},
+                },
+                "humidity": {
+                    "heighest": {"value": 0, "count": 0},
+                    "lowest": {"value": 0, "count": 0},
+                },
+                "humidity_mean": {
+                    "heighest": {"value": 0, "count": 0},
+                    "lowest": {"value": 0, "count": 0},
+                },
+            }
         """
 
         ret = {
@@ -214,11 +253,12 @@ class WeatherMan:
         """Get the data of the weather for a given year.
 
         Args:
-            year (int): year of the weather
-            month (int): month of the weather
+            year(int): year of the weather
+            month(int): month of the weather
 
         Returns:
-            dict[str, Weather]: key is the date of the weather, value is the weather. Date in format YYYY-MM-DD
+            dict[str, Weather]: key is the date of the weather, value is the weather. 
+            Date in format YYYY-MM-DD
         """
         key = f"{year}_{MONTHS[month]}"
         if key not in self._cache:

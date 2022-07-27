@@ -11,10 +11,10 @@ setuptools.setup(
     package_dir={'': 'src'},
     packages=setuptools.find_packages(where="src"),
     entry_points={
-        'console_scripts': [ 
+        'console_scripts': [
             'weatherman = weatherman.__main__:main',
         ]
-    } ,
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -27,6 +27,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
 
     install_requires=[
+        "termcolor",
     ],
     extras_require={
         "test": [

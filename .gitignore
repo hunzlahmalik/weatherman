@@ -1,7 +1,7 @@
 # VSCODE
 .vscode
 .DS_Store
-./tests/weatherfiles/
+tests/weatherfiles
 docs/weatherman.pdf
 docs/weatherman.zip
 

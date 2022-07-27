@@ -1,11 +1,11 @@
 from weatherman.constants import MONTHS
 from weatherman.weatherman import WeatherMan
-from weatherman.utils import draw_bar
+from weatherman.utils import get_bar
 import sys
 
 
 def main():
-    if sys.argv[1] == "--help":
+    if len(sys.argv) <= 1 or sys.argv[1] == "--help":
         print("Usage: weatherman <folder path> <switch> <year/month>")
         print("Switch:")
         print("\t--help: show this help")
@@ -26,17 +26,17 @@ def main():
                 date[1]) - 1 if isMonth else None)
             print(
                 "Highest: {}C on {} {}\nLowest: {}C on {} {}\nHumidity: {}% on {} {}".format(
-                    res["temperature"]["heighest"]["value"],
+                    round(res["temperature"]["heighest"]["value"]),
                     MONTHS[
                         int(res["temperature"]["heighest"]
                             ["date"].split("-")[1]) - 1
                     ],
                     res["temperature"]["heighest"]["date"].split("-")[2],
-                    res["temperature"]["lowest"]["value"],
+                    round(res["temperature"]["lowest"]["value"]),
                     MONTHS[int(res["temperature"]["lowest"]
                                ["date"].split("-")[1]) - 1],
                     res["temperature"]["lowest"]["date"].split("-")[2],
-                    res["humidity"]["heighest"]["value"],
+                    round(res["humidity"]["heighest"]["value"]),
                     MONTHS[int(res["humidity"]["heighest"]
                                ["date"].split("-")[1]) - 1],
                     res["humidity"]["heighest"]["date"].split("-")[2],
@@ -51,12 +51,12 @@ def main():
             )
             print(
                 "Highest Temperature: {}C\nLowest Temperature: {}C\nAverage Mean Humidity: {}%".format(
-                    res["temperature"]["heighest"]["value"]
-                    / res["temperature"]["heighest"]["count"],
-                    res["temperature"]["lowest"]["value"]
-                    / res["temperature"]["lowest"]["count"],
-                    res["humidity_mean"]["lowest"]["value"]
-                    / res["humidity_mean"]["lowest"]["count"],
+                    round(res["temperature"]["heighest"]["value"]
+                          / res["temperature"]["heighest"]["count"]),
+                    round(res["temperature"]["lowest"]["value"]
+                          / res["temperature"]["lowest"]["count"]),
+                    round(res["humidity_mean"]["lowest"]["value"]
+                          / res["humidity_mean"]["lowest"]["count"]),
                 )
             )
 
@@ -76,22 +76,20 @@ def main():
                 print(
                     "{} {}{} {}C - {}C".format(
                         date.split("-")[2],
-                        draw_bar(
+                        get_bar(
                             weather.temperature_min,
                             weather.temperature_min + weather.temperature_max,
                             50,
                             color="blue",
-                            print_bar=False,
                         ),
-                        draw_bar(
+                        get_bar(
                             weather.temperature_max,
                             weather.temperature_min + weather.temperature_max,
                             50,
                             color="red",
-                            print_bar=False,
                         ),
-                        weather.temperature_min,
-                        weather.temperature_max,
+                        round(weather.temperature_min),
+                        round(weather.temperature_max),
                     )
                 )
 
