@@ -23,7 +23,7 @@ class WeatherMan:
 
         return reader(
             (self._dirpath + "/" + LOCATION + "_weather_{}_{}.txt").format(
-                year, MONTHS[month-1]
+                year, MONTHS[month]
             )
         )
 
@@ -81,7 +81,7 @@ class WeatherMan:
         }
 
         if month is not None:
-            key = f"{year}_{MONTHS[month]}"
+            key = f"{year}_{MONTHS[month-1]}"
 
             if key not in self._cache or force_reload:
                 self._cache[key] = self.read_file(year, month)
